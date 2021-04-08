@@ -3,33 +3,63 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
+        String name;
+        String address;
+        int phone;
+        int accountNumber;
+        Transaction myTransactions = new Transaction();
+        Scanner input = new Scanner(System.in);
 
-        //Satta integraler för programmet
-        int balance = 0, transaction, deposit = 0, withdraw = 0;
 
-        System.out.println("Current balance: " + balance);
-        System.out.println("Enter a deposit or withdraw (>0 = deposit, <0 = withdraw: ");
+        System.out.println("Welcome to the Bank of Java. Please fill in the form: ");
+        System.out.println("Name: ");
+        name = input.nextLine();
+        System.out.println("Address: ");
+        address = input.nextLine();
+        System.out.println("Phone: ");
+        phone = input.nextInt();
+        System.out.println("Account number: ");
+        accountNumber = input.nextInt();
+        input.nextLine();
 
-        //sätter gränser för hur programmet skall köras + lägger till en Scanner för att kunna läsa av användarinput
-        for (int i = 0; i < 10; i++) {
-            Scanner input = new Scanner(System.in);
-            transaction = input.nextInt();
 
-            //summerar nya saldot efter varje transakion
-            balance += transaction;
+        while (true) {
+            System.out.println("--- Menu ---");
+            System.out.println("1. Deposit");
+            System.out.println("2. Withdraw");
+            System.out.println("3. View Account");
+            System.out.println("4. Exit");
 
-            System.out.println("Current balance :" + balance);
-            System.out.println("Enter a deposit or withdraw (>0 = deposit, <0 = withdraw: ");
+            int choice = Integer.parseInt(input.nextLine());
 
-            //if statement används för att kategorisera vad ska lagras som deposit/withdraw
-            if (transaction >= 0) {
-                deposit += 1;
-            } else {
-                withdraw += 1;
+
+            switch (choice) {
+                case 1 -> {
+                    System.out.print("Enter deposit amount: ");
+                    double deposit = Double.parseDouble(input.nextLine());
+                    myTransactions.setDeposit(deposit);
+                }
+                case 2 -> {
+                    System.out.print("Enter withdraw amount: ");
+                    double withdraw = Double.parseDouble(input.nextLine());
+                    myTransactions.setWithdraw(withdraw);
+                }
+                case 3 -> {
+                    System.out.printf("Name            :%s%n", name);
+                    System.out.printf("Address         :%s%n", address);
+                    System.out.printf("Phone           :%d%n", phone);
+                    System.out.printf("Account number  :%d%n", accountNumber);
+                    System.out.printf("Current Balance :%.1f%n", myTransactions.getBalance());
+                    System.out.println();
+                }
+                case 4 -> {
+                    System.out.println("Do you wanna quit (y/n):");
+                    String secondChoice = input.nextLine();
+                    if (secondChoice.equals("y")) {
+                        System.exit(0);
+                    }
+                }
             }
         }
-        System.out.println("# of deposits : " + deposit);
-        System.out.println("# of withdraws: " + withdraw);
-        System.out.println("Final balance: " + balance);
     }
 }
